@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -8,17 +8,18 @@ import Lottie from "lottie-react";
 import loginAnimation from "../../assets/LogInLottie.json";
 
 const LogIn = () => {
-  const { signInUser } = useContext(AuthContext);
+  const { signInUser, signInWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
-
-  const handleLogIn = (e) => {
+  const [errorMessage, setErrorMessage] = useState("");
+  const handleLogIn = async (e) => {
     e.preventDefault();
 
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    signInUser(email, password)
+    await signInUser(email, password)
       .then((result) => {
+        console.log(result);
         Swal.fire({
           title: "Success",
           text: "User Logged In Successfully",
@@ -28,6 +29,7 @@ const LogIn = () => {
         navigate("/");
       })
       .catch((err) => {
+        console.log(err);
         Swal.fire({
           title: "Failed to Log In",
           text: "Please use correct credentials",
@@ -35,6 +37,33 @@ const LogIn = () => {
           confirmButtonText: "Close",
         });
       });
+  };
+
+  const handleGoogleSignIn = async () => {
+    setErrorMessage("");
+    await signInWithGoogle()
+      .then((result) => {
+        const user = result.user;
+        const { displayName, photoURL, email } = user;
+        console.log(user, displayName, photoURL, email);
+        Swal.fire({
+          title: "Success",
+          text: "User Logged In Successfully",
+          icon: "success",
+          confirmButtonText: "Cool",
+        });
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+        setErrorMessage(err.errorMessage);
+      });
+
+    // await axios.post(`http://localhost:3000/users/${email}`, {
+    //   displayName,
+    //   photoURL,
+    //   email,
+    // });
   };
 
   return (
@@ -94,11 +123,15 @@ const LogIn = () => {
           {/* Google Login Button */}
           <div className="divider">or Log in with</div>
           <div className="form-control mb-6">
-            <button className="btn w-full py-4 bg-white text-gray-700 border border-gray-300 rounded-lg flex items-center justify-center space-x-4 hover:bg-gray-100 transition duration-300 ease-in-out">
+            <button
+              className="btn w-full py-4 bg-white text-gray-700 border border-gray-300 rounded-lg flex items-center justify-center space-x-4 hover:bg-gray-100 transition duration-300 ease-in-out"
+              onClick={handleGoogleSignIn}
+            >
               <FcGoogle size={24} />
               <span className="text-lg font-semibold">Log in with Google</span>
             </button>
           </div>
+          {errorMessage && <p>{errorMessage}</p>}
 
           {/* Signup Link */}
           <p className="text-center text-gray-700">
