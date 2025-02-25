@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
-import logo from "../../assets/DiGIDIne.png";
 import { useContext } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import Lottie from "lottie-react";
+import loginAnimation from "../../assets/LogInLottie.json";
 
 const LogIn = () => {
   const { signInUser } = useContext(AuthContext);
@@ -18,17 +19,15 @@ const LogIn = () => {
 
     signInUser(email, password)
       .then((result) => {
-        console.log(result.user);
         Swal.fire({
           title: "Success",
-          text: "User Logged In Successfully ",
+          text: "User Logged In Successfully",
           icon: "success",
           confirmButtonText: "Cool",
         });
         navigate("/");
       })
       .catch((err) => {
-        console.log(err);
         Swal.fire({
           title: "Failed to Log In",
           text: "Please use correct credentials",
@@ -38,102 +37,86 @@ const LogIn = () => {
       });
   };
 
-  //   const handleGoogleSignIn = () => {
-  //     signInWithGoogle()
-  //       .then((result) => {
-  //         // save user email to DB
-  //         fetch("https://sports-server-side-seven.vercel.app/users", {
-  //           method: "POST",
-  //           headers: {
-  //             "content-type": "application/json",
-  //           },
-  //           body: JSON.stringify({
-  //             displayName: result.user.displayName,
-  //             email: result.user.email,
-  //             photoURL: result.user.photoURL,
-  //           }),
-  //         })
-  //           .then((res) => res.json())
-  //           .then((data) => {
-  //             if (data.insertedId) {
-  //               Swal.fire({
-  //                 title: "Success",
-  //                 text: "Registration Successful ",
-  //                 icon: "success",
-  //                 confirmButtonText: "Cool",
-  //               });
-  //             } else {
-  //               Swal.fire({
-  //                 title: "Success",
-  //                 text: "User Logged In Successfully ",
-  //                 icon: "success",
-  //                 confirmButtonText: "Cool",
-  //               });
-  //             }
-  //           });
-  //         navigate("/");
-  //       })
-  //       .catch((err) => {
-  //         console.log("Error", err);
-  //         setErrorMessage(err.message);
-  //       });
-  //   };
-
   return (
-    <div className="flex flex-col items-center justify-center mt-20 min-h-screen">
-      <div className="flex justify-center items-center mb-10">
-        <img src={logo} alt="" className="w-28 h-28 rounded-full text-center" />
-      </div>
-      <div className="card bg-base-100 w-full max-w-xl shrink-0 shadow-2xl h-550px mb-20">
-        <form className="card-body" onSubmit={handleLogIn}>
-          <p className="text-center text-4xl">Login</p>
-          <div className="divider"></div>
-          <div className="form-control">
-            <label className="label mb-2">
-              <span className="label-text text-2xl font-bold">Email</span>
+    <div className="flex items-center justify-center min-h-screen px-4 py-10">
+      {/* Login Form Section */}
+      <div className="flex flex-col items-center bg-white rounded-lg shadow-xl p-8 w-full max-w-xl ">
+        <form onSubmit={handleLogIn} className="w-full">
+          <p className="text-3xl font-semibold text-center text-gray-700 mb-6">
+            Log in to{" "}
+            <span className="bg-gradient-to-r from-blue-600 via-yellow-600 to-red-500 inline-block text-transparent bg-clip-text">
+              DigiDINE
+            </span>
+          </p>
+
+          {/* Email Input */}
+          <div className="form-control mb-6">
+            <label className="label">
+              <span className="label-text text-lg font-semibold text-gray-600">
+                Email
+              </span>
             </label>
             <input
               type="email"
-              placeholder="Enter your Email Address"
-              className="input input-bordered text-2xl h-[60px]"
-              required
               name="email"
+              placeholder="Enter your email"
+              className="input input-bordered w-full text-lg p-4 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 border-1 border-gray-300"
+              required
             />
           </div>
-          <div className="form-control ">
-            <label className="label ">
-              <span className="label-text text-2xl font-bold">Password</span>
+
+          {/* Password Input */}
+          <div className="form-control mb-6">
+            <label className="label">
+              <span className="label-text text-lg font-semibold text-gray-600">
+                Password
+              </span>
             </label>
             <input
               type="password"
-              placeholder="Enter your password"
-              className="input input-bordered h-[60px] text-2xl"
-              required
               name="password"
+              placeholder="Enter your password"
+              className="input input-bordered w-full text-lg p-4 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 border-1 border-gray-300"
+              required
             />
           </div>
-          <div className="form-control mt-4">
-            <button className="btn btn-primary rounded-full text-2xl h-[60px]">
-              Login
-            </button>
-          </div>
-          <div className="divider">or Log in with</div>
-          <div className="form-control mt-4">
-            <button className="btn text-2xl h-[60px] rounded-full hover:bg-[#564CFC] hover:text-white">
-              <FcGoogle /> Log in with Google
+
+          {/* Login Button */}
+          <div className="form-control mb-6">
+            <button
+              type="submit"
+              className="btn w-full py-4 text-lg font-bold rounded-lg bg-blue-600 text-white transition duration-300 ease-in-out hover:bg-blue-700 hover:scale-105"
+            >
+              Log In
             </button>
           </div>
 
-          <p className="text-center mt-4 mb-8 text-lg">
-            Do not have an account?
-            <Link
-              to="/register"
-              className="label-text-alt link link-hover text-blue-700 text-lg ml-1"
-            >
-              Sign up
+          {/* Google Login Button */}
+          <div className="divider">or Log in with</div>
+          <div className="form-control mb-6">
+            <button className="btn w-full py-4 bg-white text-gray-700 border border-gray-300 rounded-lg flex items-center justify-center space-x-4 hover:bg-gray-100 transition duration-300 ease-in-out">
+              <FcGoogle size={24} />
+              <span className="text-lg font-semibold">Log in with Google</span>
+            </button>
+          </div>
+
+          {/* Signup Link */}
+          <p className="text-center text-gray-700">
+            Don’t have an account?{" "}
+            <Link to="/register" className="text-blue-600 hover:underline">
+              Sign up here
             </Link>
           </p>
         </form>
+      </div>
+
+      {/* Lottie Animation Section */}
+      <div className="hidden md:flex justify-center ml-10">
+        <Lottie
+          animationData={loginAnimation}
+          loop={true}
+          className="w-96 h-96"
+        />
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ const Navbar = () => {
       <li>
         <NavLink
           to="/"
-          className=" block btn text-base md:text-lg p-2 lg:p-4 rounded-md "
+          className=" block btn text-base md:text-lg p-2 lg:p-4 rounded-md w-full md:w-26 text-center"
         >
           Home
         </NavLink>
@@ -26,7 +26,7 @@ const Navbar = () => {
       <li>
         <NavLink
           to="/allFoods"
-          className="btn btn-ghost text-base md:text-lg lg:w-[140px] px-4 h-16 "
+          className="btn btn-ghost text-base md:text-lg w-full px-4 h-16 "
         >
           All Foods
         </NavLink>
@@ -89,7 +89,7 @@ const Navbar = () => {
     <nav className="navbar bg-base-100 shadow-lg w-full flex gap-2 justify-between pt-4 pb-4">
       {/* Navbar Start */}
       <div className="relative justify-center flex items-center ">
-        <div className="lg:hidden group focus-within:outline-none ">
+        <div className="md:hidden">
           <button onClick={() => setIsOpen(!isOpen)} className="p-2">
             <RiMenuFold2Fill
               className="text-2xl hover:bg-gray-400 hover:border-2 hover:border-gray-400"
@@ -97,7 +97,7 @@ const Navbar = () => {
             />
           </button>
           {isOpen && (
-            <ul className="absolute left-4 top-14 bg-white border-gray-400 shadow-lg p-2 rounded-lg w-40 h-26 border-1 group focus-within:hidden">
+            <ul className="absolute left-4 top-14 bg-white border-gray-400 shadow-lg p-2 rounded-lg w-40 h-fit border-1">
               {links}
             </ul>
           )}
@@ -110,13 +110,13 @@ const Navbar = () => {
             block"
           />
           <div className="hidden md:block text-lg font-bold md:text-xl bg-gradient-to-r from-red-400 to-sky-400 p-2 rounded-lg lg:p-4  text-center ml-2">
-            DigiDine
+            DigiDINE
           </div>
         </Link>
       </div>
 
       {/* Navbar Center */}
-      <div className="navbar-center hidden lg:flex">
+      <div className="navbar-center hidden md:flex">
         <ul className="menu menu-horizontal gap-6 flex items-center justify-center">
           {links}
         </ul>
@@ -126,7 +126,7 @@ const Navbar = () => {
       <div className="navbar-end flex gap-2">
         <div>
           {user ? (
-            <div className="lg:hidden group focus-within:outline-none flex gap-2 mr-2">
+            <div className=" group focus-within:outline-none flex gap-2 mr-2">
               <img
                 onClick={() => setImgClicked(!imgClicked)}
                 src={user.photoURL}
@@ -140,23 +140,23 @@ const Navbar = () => {
               )}
 
               <button
-                className="btn bg-gradient-to-r  from-red-300 to-sky-400 p-2 rounded-lg lg:p-4"
+                className="btn bg-gradient-to-r  from-red-300 to-sky-400 p-2 rounded-lg lg:p-4 font-bold text-base md:text-lg lg:text-xl w-28"
                 onClick={handleSignOut}
               >
                 Log Out
               </button>
             </div>
           ) : (
-            <div className="flex gap-2">
+            <div className="flex gap-2 justify-center items-center text-center">
               <Link
                 to="/logIn"
-                className="btn bg-gradient-to-r from-blue-500 to-blue-700 w-20 md:w-32 md:h-16 text-sm text-white md:text-lg"
+                className="btn bg-gradient-to-r  from-red-300 to-sky-400 p-2 rounded-lg lg:p-4 font-bold text-base md:text-lg lg:text-xl  w-22 lg:w-26"
               >
                 Log In
               </Link>
               <Link
                 to="/register"
-                className="btn btn-secondary w-20 md:w-32 md:h-16 text-sm md:text-lg"
+                className="btn bg-gradient-to-r  from-purple-300 to-blue-400 p-2 rounded-lg lg:p-4 font-bold text-base md:text-lg lg:text-xl w-22 lg:w-26"
               >
                 Register
               </Link>
