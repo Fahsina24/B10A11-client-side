@@ -78,7 +78,7 @@ const FoodCard = ({ food }) => {
         </div>
 
         <div className="p-4 bg-gray-100 flex justify-between items-center rounded-b-xl mt-auto">
-          <Link to={`/details/${_id}`} className="w-full">
+          <Link to={`/singleFood/${_id}`} className="w-full">
             <button className="flex items-center justify-center py-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white text-lg font-semibold rounded-lg shadow-md hover:scale-105  duration-300 gap-2 px-4 ">
               View Details <LuArrowUpRight size={22} />
             </button>

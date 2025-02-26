@@ -83,7 +83,7 @@ const Navbar = () => {
   return (
     <nav className="navbar shadow-lg w-full flex gap-2 justify-between pt-4 pb-4 bg-base-300">
       <div className="navbar-start">
-        <div className="dropdown">
+        <div className="dropdown lg:hidden">
           <div
             tabIndex="0"
             role="button"
