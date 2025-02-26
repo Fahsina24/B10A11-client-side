@@ -15,7 +15,7 @@ const Navbar = () => {
       <li>
         <NavLink
           to="/"
-          className="block btn text-base md:text-lg p-2 md:p-4 rounded-md w-full h-16 text-center"
+          className="block text-base md:text-lg p-2 md:p-4  w-full h-16 text-center"
         >
           Home
         </NavLink>
@@ -23,7 +23,7 @@ const Navbar = () => {
       <li>
         <NavLink
           to="/allFoods"
-          className="btn btn-ghost text-base md:text-lg w-full px-4 h-16"
+          className="block text-base md:text-lg p-2 md:p-4  w-full h-16 text-center"
         >
           All Foods
         </NavLink>
@@ -31,7 +31,7 @@ const Navbar = () => {
       <li>
         <NavLink
           to="/gallery"
-          className="btn btn-ghost text-base md:text-lg lg:w-[140px] px-4 h-16"
+          className="block  text-base md:text-lg p-2 md:p-4  w-full h-16 text-center"
         >
           Gallery
         </NavLink>
@@ -44,7 +44,7 @@ const Navbar = () => {
       <li>
         <NavLink
           to="/my_food"
-          className="block btn text-base md:text-lg p-2 lg:p-4 rounded-md"
+          className="block text-base md:text-lg p-2 md:p-4  w-full h-16 text-center"
         >
           My Foods
         </NavLink>
@@ -52,7 +52,7 @@ const Navbar = () => {
       <li>
         <NavLink
           to="/add_food"
-          className="block btn text-base md:text-lg p-2 lg:p-4 rounded-md"
+          className="block text-base md:text-lg p-2 md:p-4  w-full h-16 text-center"
         >
           Add Foods
         </NavLink>
@@ -60,7 +60,7 @@ const Navbar = () => {
       <li>
         <NavLink
           to="/my_orders"
-          className="block btn text-base md:text-lg p-2 lg:p-4 rounded-md"
+          className="block text-base md:text-lg p-2 md:p-4  w-full h-16 text-center"
         >
           My Orders
         </NavLink>
@@ -81,10 +81,14 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar bg-base-100 shadow-lg w-full flex gap-2 justify-between pt-4 pb-4">
+    <nav className="navbar shadow-lg w-full flex gap-2 justify-between pt-4 pb-4 bg-base-300">
       <div className="navbar-start">
         <div className="dropdown">
-          <div tabIndex="0" role="button" className="btn btn-ghost btn-circle">
+          <div
+            tabIndex="0"
+            role="button"
+            className="btn btn-ghost btn-circle p-2"
+          >
             <RiMenuFold2Fill size={40} />
           </div>
           <ul
@@ -111,30 +115,25 @@ const Navbar = () => {
           {links}
         </ul>
       </div>
-      <div className="navbar-end flex gap-2">
+      <div className="navbar-end">
         {user ? (
-          <div className="dropdown">
-            <div
+          <div className="dropdown flex">
+            <img
+              src={user.photoURL}
               tabIndex="0"
+              className="w-16 rounded-full mr-2"
               role="button"
-              className="btn btn-ghost btn-circle w-fit"
-            >
-              <img
-                src={user.photoURL}
-                className="w-16 rounded-full "
-                role="button"
-              />
-            </div>
+            />
 
             <ul
               tabIndex="0"
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow right-10"
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-18 w-52 p-2 shadow right-10"
             >
               {profileLink}
             </ul>
 
             <button
-              className="btn bg-gradient-to-r from-red-300 to-sky-400 p-2 rounded-lg lg:p-4 font-bold text-base md:text-lg lg:text-xl w-28 h-16"
+              className="btn bg-gradient-to-r from-red-300 to-sky-400  rounded-lg w-22 font-bold text-xs md:text-lg lg:text-xl  md:w-28 h-16"
               onClick={handleSignOut}
             >
               Log Out

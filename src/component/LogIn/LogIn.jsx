@@ -5,6 +5,7 @@ import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
+import axios from "axios";
 import loginAnimation from "../../assets/LogInLottie.json";
 
 const LogIn = () => {
@@ -39,31 +40,21 @@ const LogIn = () => {
       });
   };
 
-  const handleGoogleSignIn = async () => {
-    setErrorMessage("");
-    await signInWithGoogle()
-      .then((result) => {
-        const user = result.user;
-        const { displayName, photoURL, email } = user;
-        console.log(user, displayName, photoURL, email);
-        Swal.fire({
-          title: "Success",
-          text: "User Logged In Successfully",
-          icon: "success",
-          confirmButtonText: "Cool",
-        });
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log(err);
-        setErrorMessage(err.errorMessage);
-      });
-
-    // await axios.post(`http://localhost:3000/users/${email}`, {
-    //   displayName,
-    //   photoURL,
-    //   email,
-    // });
+  const handleGoogleLogIn = async () => {
+    const result = await signInWithGoogle();
+    const { displayName, photoURL, email } = result.user;
+    await axios.post(`http://localhost:3000/users/${email}`, {
+      displayName,
+      photoURL,
+      email,
+    });
+    navigate("/");
+    Swal.fire({
+      title: "Success",
+      text: "Successfully Logged In",
+      icon: "success",
+      confirmButtonText: "Cool",
+    });
   };
 
   return (
@@ -124,8 +115,8 @@ const LogIn = () => {
           <div className="divider">or Log in with</div>
           <div className="form-control mb-6">
             <button
-              className="btn w-full py-4 bg-white text-gray-700 border border-gray-300 rounded-lg flex items-center justify-center space-x-4 hover:bg-gray-100 transition duration-300 ease-in-out"
-              onClick={handleGoogleSignIn}
+              className="btn w-full py-4 bg-white text-gray-700 border border-gray-300 rounded-lg flex items-center justify-center space-x-4 hover:bg-blue-600 hover:text-white"
+              onClick={handleGoogleLogIn}
             >
               <FcGoogle size={24} />
               <span className="text-lg font-semibold">Log in with Google</span>
@@ -136,7 +127,10 @@ const LogIn = () => {
           {/* Signup Link */}
           <p className="text-center text-gray-700">
             Don’t have an account?{" "}
-            <Link to="/register" className="text-blue-600 hover:underline">
+            <Link
+              to="/register"
+              className="text-blue-600 hover:underline hover:text-blue-600 hover:text-lg hover:font-extrabold"
+            >
               Sign up here
             </Link>
           </p>

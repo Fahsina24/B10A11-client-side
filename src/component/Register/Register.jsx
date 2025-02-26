@@ -8,6 +8,7 @@ import { imageUpload } from "../../api/ImgApi";
 import { DiAptana } from "react-icons/di";
 import Lottie from "lottie-react";
 import registerAnimation from "../../assets/RegisterLottie.json";
+import axios from "axios";
 
 const Register = () => {
   const { createUser, signInWithGoogle, updateUserProfile } =
@@ -44,7 +45,11 @@ const Register = () => {
 
       // Update profile
       await updateUserProfile(displayName, photoURL);
-
+      await axios.post(`http://localhost:3000/users/${email}`, {
+        displayName,
+        photoURL,
+        email,
+      });
       navigate("/");
       Swal.fire({
         title: "Registration Successful",
@@ -66,12 +71,12 @@ const Register = () => {
 
   const handleGoogleSignUp = async () => {
     const result = await signInWithGoogle();
-    // const { displayName, photoURL, email } = result.user;
-    // await axios.post(`http://localhost:3000/users/${email}`, {
-    //   displayName,
-    //   photoURL,
-    //   email,
-    // });
+    const { displayName, photoURL, email } = result.user;
+    await axios.post(`http://localhost:3000/users/${email}`, {
+      displayName,
+      photoURL,
+      email,
+    });
     Swal.fire({
       title: "Success",
       text: "Successfully Logged In",
@@ -167,7 +172,7 @@ const Register = () => {
           <div className="divider">or Sign up with</div>
           <div className="form-control mb-6">
             <button
-              className="btn w-full py-4 bg-white text-gray-700 border border-gray-300 rounded-lg flex items-center justify-center space-x-4 hover:bg-blue-800"
+              className="btn w-full py-4 bg-white text-gray-700 border border-gray-300 rounded-lg flex items-center justify-center space-x-4 hover:bg-blue-600 hover:text-white"
               onClick={handleGoogleSignUp}
             >
               <FcGoogle size={24} />
@@ -178,7 +183,10 @@ const Register = () => {
           {/* Login Link */}
           <p className="text-center text-gray-700">
             Already have an account?{" "}
-            <Link to="/login" className="text-blue-600 hover:underline">
+            <Link
+              to="/login"
+              className="text-blue-600 hover:underline hover:text-blue-600 hover:text-lg hover:font-extrabold"
+            >
               Log in here
             </Link>
           </p>
