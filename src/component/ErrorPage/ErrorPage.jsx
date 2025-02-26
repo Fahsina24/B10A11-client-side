@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
+import { Helmet } from "react-helmet-async";
 
 const ErrorPage = () => {
   return (
     <div>
+      <Helmet>
+        <title>DigiDINE | Error_Page</title>
+      </Helmet>
       <Navbar></Navbar>
       <div className="flex justify-center items-center">
         <div className="text-center mt-14 mb-14">

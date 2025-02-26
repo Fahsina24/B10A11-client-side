@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
+import { HelmetProvider } from "react-helmet-async";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./component/Root/Root";
 import ErrorPage from "./component/ErrorPage/ErrorPAge";
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
       {
         path: "/allFoods",
         element: <AllFood></AllFood>,
+        loader: () => fetch(`http://localhost:3000/allFoods`),
       },
       {
         path: "/gallery",
@@ -71,8 +73,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <HelmetProvider>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </HelmetProvider>
   </StrictMode>
 );

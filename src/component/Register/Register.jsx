@@ -9,6 +9,7 @@ import { DiAptana } from "react-icons/di";
 import Lottie from "lottie-react";
 import registerAnimation from "../../assets/RegisterLottie.json";
 import axios from "axios";
+import { Helmet } from "react-helmet-async";
 
 const Register = () => {
   const { createUser, signInWithGoogle, updateUserProfile } =
@@ -87,110 +88,117 @@ const Register = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-center  gap-10 justify-center mt-20 min-h-screen">
-      <div className=" justify-center">
-        <Lottie
-          animationData={registerAnimation}
-          loop={true}
-          className="w-96 h-96"
-        />
-      </div>
-      <div className="card bg-base-100 w-full max-w-xl shrink-0 shadow-2xl h-550px mb-20">
-        <form className="card-body" onSubmit={handleRegister}>
-          <p className="text-center text-3xl font-semibold mb-4 text-gray-700">
-            Create Your{" "}
-            <span className="bg-gradient-to-r from-blue-600 via-yellow-600 to-red-500 text-transparent bg-clip-text">
-              DigiDINE
-            </span>{" "}
-            Account
-          </p>
+    <div>
+      <Helmet>
+        <title>DigiDINE | Register</title>
+      </Helmet>
+      <div className="flex flex-col md:flex-row items-center  gap-10 justify-center mt-20 min-h-screen">
+        <div className=" justify-center">
+          <Lottie
+            animationData={registerAnimation}
+            loop={true}
+            className="w-96 h-96"
+          />
+        </div>
+        <div className="card bg-base-100 w-full max-w-xl shrink-0 shadow-2xl h-550px mb-20">
+          <form className="card-body" onSubmit={handleRegister}>
+            <p className="text-center text-3xl font-semibold mb-4 text-gray-700">
+              Create Your{" "}
+              <span className="bg-gradient-to-r from-blue-600 via-yellow-600 to-red-500 text-transparent bg-clip-text">
+                DigiDINE
+              </span>{" "}
+              Account
+            </p>
 
-          <div className="form-control flex flex-col">
-            <label className="label mb-2">
-              <span className="label-text text-2xl font-bold ">Name:</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Name"
-              name="name"
-              className="input input-bordered text-2xl h-[60px] w-full"
-              required
-            />
-          </div>
+            <div className="form-control flex flex-col">
+              <label className="label mb-2">
+                <span className="label-text text-2xl font-bold ">Name:</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Name"
+                name="name"
+                className="input input-bordered text-2xl h-[60px] w-full"
+                required
+              />
+            </div>
 
-          <div className="form-control flex flex-col">
-            <label className="label mb-2">
-              <span className="label-text text-2xl font-bold">Email:</span>
-            </label>
-            <input
-              type="email"
-              placeholder="Enter your Email Address"
-              name="email"
-              className="input input-bordered text-2xl h-[60px]  w-full"
-              required
-            />
-          </div>
+            <div className="form-control flex flex-col">
+              <label className="label mb-2">
+                <span className="label-text text-2xl font-bold">Email:</span>
+              </label>
+              <input
+                type="email"
+                placeholder="Enter your Email Address"
+                name="email"
+                className="input input-bordered text-2xl h-[60px]  w-full"
+                required
+              />
+            </div>
 
-          <div className="form-control flex flex-col">
-            <label className="label mb-2">
-              <span className="label-text text-2xl font-bold">Image:</span>
-            </label>
+            <div className="form-control flex flex-col">
+              <label className="label mb-2">
+                <span className="label-text text-2xl font-bold">Image:</span>
+              </label>
 
-            <input
-              type="file"
-              className="file-input file-input-success mt-2 text-sm text-gray-500"
-              name="image"
-              accept="image/*"
-            />
-          </div>
-          <div className="form-control flex flex-col ">
-            <label className="label ">
-              <span className="label-text text-2xl font-bold  w-full">
-                Password:
-              </span>
-            </label>
-            <input
-              type="password"
-              placeholder="Enter your Password"
-              name="password"
-              className="input input-bordered h-[60px] text-2xl  w-full"
-              required
-            />
-          </div>
-          {errorMessage && <p className="text-red-600">{errorMessage}</p>}
+              <input
+                type="file"
+                className="file-input file-input-success mt-2 text-sm text-gray-500"
+                name="image"
+                accept="image/*"
+              />
+            </div>
+            <div className="form-control flex flex-col ">
+              <label className="label ">
+                <span className="label-text text-2xl font-bold  w-full">
+                  Password:
+                </span>
+              </label>
+              <input
+                type="password"
+                placeholder="Enter your Password"
+                name="password"
+                className="input input-bordered h-[60px] text-2xl  w-full"
+                required
+              />
+            </div>
+            {errorMessage && <p className="text-red-600">{errorMessage}</p>}
 
-          <div className="form-control mb-4">
-            <button
-              type="submit"
-              className="btn w-full py-4 text-lg font-bold rounded-lg bg-blue-600 text-white mt-6 hover:bg-blue-800 "
-            >
-              {btnClicked ? <DiAptana className="animate-spin" /> : "Sign Up"}
-            </button>
-          </div>
+            <div className="form-control mb-4">
+              <button
+                type="submit"
+                className="btn w-full py-4 text-lg font-bold rounded-lg bg-blue-600 text-white mt-6 hover:bg-blue-800 "
+              >
+                {btnClicked ? <DiAptana className="animate-spin" /> : "Sign Up"}
+              </button>
+            </div>
 
-          {/* Google Sign-Up Button */}
-          <div className="divider">or Sign up with</div>
-          <div className="form-control mb-6">
-            <button
-              className="btn w-full py-4 bg-white text-gray-700 border border-gray-300 rounded-lg flex items-center justify-center space-x-4 hover:bg-blue-600 hover:text-white"
-              onClick={handleGoogleSignUp}
-            >
-              <FcGoogle size={24} />
-              <span className="text-lg font-semibold">Sign up with Google</span>
-            </button>
-          </div>
+            {/* Google Sign-Up Button */}
+            <div className="divider">or Sign up with</div>
+            <div className="form-control mb-6">
+              <button
+                className="btn w-full py-4 bg-white text-gray-700 border border-gray-300 rounded-lg flex items-center justify-center space-x-4 hover:bg-blue-600 hover:text-white"
+                onClick={handleGoogleSignUp}
+              >
+                <FcGoogle size={24} />
+                <span className="text-lg font-semibold">
+                  Sign up with Google
+                </span>
+              </button>
+            </div>
 
-          {/* Login Link */}
-          <p className="text-center text-gray-700">
-            Already have an account?{" "}
-            <Link
-              to="/login"
-              className="text-blue-600 hover:underline hover:text-blue-600 hover:text-lg hover:font-extrabold"
-            >
-              Log in here
-            </Link>
-          </p>
-        </form>
+            {/* Login Link */}
+            <p className="text-center text-gray-700">
+              Already have an account?{" "}
+              <Link
+                to="/login"
+                className="text-blue-600 hover:underline hover:text-blue-600 hover:text-lg hover:font-extrabold"
+              >
+                Log in here
+              </Link>
+            </p>
+          </form>
+        </div>
       </div>
     </div>
   );

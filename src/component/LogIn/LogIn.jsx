@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
 import axios from "axios";
 import loginAnimation from "../../assets/LogInLottie.json";
+import { Helmet } from "react-helmet-async";
 
 const LogIn = () => {
   const { signInUser, signInWithGoogle } = useContext(AuthContext);
@@ -58,92 +59,99 @@ const LogIn = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen px-4 py-10">
-      {/* Login Form Section */}
-      <div className="flex flex-col items-center bg-white rounded-lg shadow-xl p-8 w-full max-w-xl ">
-        <form onSubmit={handleLogIn} className="w-full">
-          <p className="text-3xl font-semibold text-center text-gray-700 mb-6">
-            Log in to{" "}
-            <span className="bg-gradient-to-r from-blue-600 via-yellow-600 to-red-500 inline-block text-transparent bg-clip-text">
-              DigiDINE
-            </span>
-          </p>
-
-          {/* Email Input */}
-          <div className="form-control mb-6">
-            <label className="label">
-              <span className="label-text text-lg font-semibold text-gray-600">
-                Email
+    <div>
+      <Helmet>
+        <title>DigiDINE | Log_In</title>
+      </Helmet>
+      <div className="flex items-center justify-center min-h-screen px-4 py-10">
+        {/* Login Form Section */}
+        <div className="flex flex-col items-center bg-white rounded-lg shadow-xl p-8 w-full max-w-xl ">
+          <form onSubmit={handleLogIn} className="w-full">
+            <p className="text-3xl font-semibold text-center text-gray-700 mb-6">
+              Log in to{" "}
+              <span className="bg-gradient-to-r from-blue-600 via-yellow-600 to-red-500 inline-block text-transparent bg-clip-text">
+                DigiDINE
               </span>
-            </label>
-            <input
-              type="email"
-              name="email"
-              placeholder="Enter your email"
-              className="input input-bordered w-full text-lg p-4 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 border-1 border-gray-300"
-              required
-            />
-          </div>
+            </p>
 
-          {/* Password Input */}
-          <div className="form-control mb-6">
-            <label className="label">
-              <span className="label-text text-lg font-semibold text-gray-600">
-                Password
-              </span>
-            </label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Enter your password"
-              className="input input-bordered w-full text-lg p-4 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 border-1 border-gray-300"
-              required
-            />
-          </div>
+            {/* Email Input */}
+            <div className="form-control mb-6">
+              <label className="label">
+                <span className="label-text text-lg font-semibold text-gray-600">
+                  Email
+                </span>
+              </label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                className="input input-bordered w-full text-lg p-4 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 border-1 border-gray-300"
+                required
+              />
+            </div>
 
-          {/* Login Button */}
-          <div className="form-control mb-6">
-            <button
-              type="submit"
-              className="btn w-full py-4 text-lg font-bold rounded-lg bg-blue-600 text-white transition duration-300 ease-in-out hover:bg-blue-700 hover:scale-105"
-            >
-              Log In
-            </button>
-          </div>
+            {/* Password Input */}
+            <div className="form-control mb-6">
+              <label className="label">
+                <span className="label-text text-lg font-semibold text-gray-600">
+                  Password
+                </span>
+              </label>
+              <input
+                type="password"
+                name="password"
+                placeholder="Enter your password"
+                className="input input-bordered w-full text-lg p-4 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 border-1 border-gray-300"
+                required
+              />
+            </div>
 
-          {/* Google Login Button */}
-          <div className="divider">or Log in with</div>
-          <div className="form-control mb-6">
-            <button
-              className="btn w-full py-4 bg-white text-gray-700 border border-gray-300 rounded-lg flex items-center justify-center space-x-4 hover:bg-blue-600 hover:text-white"
-              onClick={handleGoogleLogIn}
-            >
-              <FcGoogle size={24} />
-              <span className="text-lg font-semibold">Log in with Google</span>
-            </button>
-          </div>
-          {errorMessage && <p>{errorMessage}</p>}
+            {/* Login Button */}
+            <div className="form-control mb-6">
+              <button
+                type="submit"
+                className="btn w-full py-4 text-lg font-bold rounded-lg bg-blue-600 text-white transition duration-300 ease-in-out hover:bg-blue-700 hover:scale-105"
+              >
+                Log In
+              </button>
+            </div>
 
-          {/* Signup Link */}
-          <p className="text-center text-gray-700">
-            Don’t have an account?{" "}
-            <Link
-              to="/register"
-              className="text-blue-600 hover:underline hover:text-blue-600 hover:text-lg hover:font-extrabold"
-            >
-              Sign up here
-            </Link>
-          </p>
-        </form>
-      </div>
+            {/* Google Login Button */}
+            <div className="divider">or Log in with</div>
+            <div className="form-control mb-6">
+              <button
+                className="btn w-full py-4 bg-white text-gray-700 border border-gray-300 rounded-lg flex items-center justify-center space-x-4 hover:bg-blue-600 hover:text-white"
+                onClick={handleGoogleLogIn}
+              >
+                <FcGoogle size={24} />
+                <span className="text-lg font-semibold">
+                  Log in with Google
+                </span>
+              </button>
+            </div>
+            {errorMessage && <p>{errorMessage}</p>}
 
-      {/* Lottie Animation Section */}
-      <div className="hidden md:flex justify-center ml-10">
-        <Lottie
-          animationData={loginAnimation}
-          loop={true}
-          className="w-96 h-96"
-        />
+            {/* Signup Link */}
+            <p className="text-center text-gray-700">
+              Don’t have an account?{" "}
+              <Link
+                to="/register"
+                className="text-blue-600 hover:underline hover:text-blue-600 hover:text-lg hover:font-extrabold"
+              >
+                Sign up here
+              </Link>
+            </p>
+          </form>
+        </div>
+
+        {/* Lottie Animation Section */}
+        <div className="hidden md:flex justify-center ml-10">
+          <Lottie
+            animationData={loginAnimation}
+            loop={true}
+            className="w-96 h-96"
+          />
+        </div>
       </div>
     </div>
   );
