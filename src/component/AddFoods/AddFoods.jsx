@@ -46,7 +46,10 @@ const AddFoods = () => {
     };
 
     try {
-      await axios.post("http://localhost:3000/addFoods", newFood);
+      await axios.post(
+        "https://vercel.com/fahsinas-projects/restaurant-management-server/addFoods",
+        newFood
+      );
       Swal.fire({
         title: "Success",
         text: "Food item added successfully!",

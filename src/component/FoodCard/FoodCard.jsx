@@ -79,8 +79,8 @@ const FoodCard = ({ food }) => {
 
         <div className="p-4 bg-gray-100 flex justify-between items-center rounded-b-xl mt-auto">
           <Link to={`/singleFood/${_id}`} className="w-full">
-            <button className="flex items-center justify-center py-2 bg-gradient-to-r from-blue-500 to-blue-700 text-white text-lg font-semibold rounded-lg shadow-md hover:scale-105  duration-300 gap-2 px-4 ">
-              View Details <LuArrowUpRight size={22} />
+            <button className=" flex text-lg font-semibold rounded-sm hover:scale-105  duration-300 gap-2 p-4 border-b-2 border-blue-500 rounded-b-lg  focus:border-blue-500 focus:rounded-lg focus:bg-blue-500 focus:text-black md:text-xl focus:font-semibold hover:bg-blue-500  items-center">
+              View Details <LuArrowUpRight size={32} />
             </button>
           </Link>
           <p className="text-xl font-bold text-gray-800 ml-4">Price:${price}</p>

@@ -1,16 +1,16 @@
 import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../provider/AuthProvider";
 import axios from "axios";
 import Swal from "sweetalert2";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const FoodPurchase = () => {
   const { user } = useContext(AuthContext);
   const details = useLoaderData();
-  const { foodName, Image, quantity, price } = details;
-
+  const { foodName, quantity, price } = details;
+  const navigate = useNavigate();
   const handlePurchase = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -19,10 +19,23 @@ const FoodPurchase = () => {
     const quantity = e.target.quantity.value;
     const buyerEmail = user.email;
     const buyerName = user.displayName;
-    const foodInfo = { foodName, price, quantity, buyerEmail, buyerName };
-    console.log(Image);
+    let currentTime = new Date().toLocaleTimeString();
+
+    console.log(currentTime);
+    const foodInfo = {
+      foodName,
+      price,
+      quantity,
+      buyerEmail,
+      buyerName,
+      currentTime,
+    };
+    // console.log(Image);
     try {
-      await axios.post("http://localhost:3000/purchaseFoods", foodInfo);
+      await axios.post(
+        "https://restaurant-management-server-sage.vercel.app/purchaseFoods",
+        foodInfo
+      );
       Swal.fire({
         icon: "success",
         title: "Purchased Successful",
@@ -139,6 +152,12 @@ const FoodPurchase = () => {
               </button>
             </div>
           </form>
+          <button
+            onClick={() => navigate(-1)}
+            className="btn w-full py-4 text-xl font-bold rounded-xl bg-blue-600 text-white transition-all duration-300 ease-in-out mt-6 hover:bg-blue-700 hover:scale-105 shadow-lg"
+          >
+            Go Back
+          </button>
         </div>
       </div>
     </div>

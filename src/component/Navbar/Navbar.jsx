@@ -12,26 +12,28 @@ const Navbar = () => {
 
   const links = (
     <>
-      <li>
+      <li className="flex  justify-center items-center">
         <NavLink
           to="/"
-          className="block text-base md:text-lg p-2 md:p-4  w-full h-16 text-center"
+          className="block text-xl md:text-lg p-4 lg:p-2 w-full lg:h-12 h-16 text-center "
         >
           Home
         </NavLink>
       </li>
-      <li>
+      <br />
+      <li className="flex  justify-center items-center">
         <NavLink
           to="/allFoods"
-          className="block text-base md:text-lg p-2 md:p-4  w-full h-16 text-center"
+          className="block text-xl md:text-lg p-4 lg:p-2 w-full lg:h-12 h-16 text-center"
         >
           All Foods
         </NavLink>
       </li>
-      <li>
+      <br />
+      <li className="flex  justify-center items-center">
         <NavLink
           to="/gallery"
-          className="block  text-base md:text-lg p-2 md:p-4  w-full h-16 text-center"
+          className="block  text-xl md:text-lg p-4 lg:p-2 w-full lg:h-12 h-16 text-center"
         >
           Gallery
         </NavLink>
@@ -41,26 +43,28 @@ const Navbar = () => {
 
   const profileLink = (
     <>
-      <li>
+      <li className="flex  justify-center items-center">
         <NavLink
-          to="/my_food"
-          className="block text-base md:text-lg p-2 md:p-4  w-full h-16 text-center"
+          to={`/my_food/users/${user?.email}`}
+          className="block text-base md:text-lg p-4 lg:p-2 w-full lg:h-12 h-16 text-center"
         >
           My Foods
         </NavLink>
       </li>
-      <li>
+      <br />
+      <li className="flex  justify-center items-center">
         <NavLink
           to="/add_food"
-          className="block text-base md:text-lg p-2 md:p-4  w-full h-16 text-center"
+          className="block text-base md:text-lg p-4 lg:p-2 w-full lg:h-12 h-16 text-center"
         >
           Add Foods
         </NavLink>
       </li>
-      <li>
+      <br />
+      <li className="flex  justify-center items-center">
         <NavLink
           to="/my_orders"
-          className="block text-base md:text-lg p-2 md:p-4  w-full h-16 text-center"
+          className="block text-base md:text-lg p-4 lg:p-2 w-full lg:h-12 h-16 text-center"
         >
           My Orders
         </NavLink>
@@ -89,7 +93,7 @@ const Navbar = () => {
             role="button"
             className="btn btn-ghost btn-circle p-2"
           >
-            <RiMenuFold2Fill size={40} />
+            <RiMenuFold2Fill size={42} />
           </div>
           <ul
             tabIndex="0"
@@ -104,8 +108,10 @@ const Navbar = () => {
             alt="Logo"
             className="rounded-full w-14 lg:hidden block"
           />
-          <div className="hidden md:block text-lg font-bold md:text-xl bg-gradient-to-r from-red-400 to-sky-400 p-2 rounded-lg lg:p-4 text-center ml-2">
-            DigiDINE
+          <div className="hidden md:block text-lg font-bold md:text-xl bg-gradient-to-r from-sky-300 to-red-300 p-2 rounded-lg lg:p-4 text-center ml-2">
+            <span className="bg-gradient-to-r from-blue-600 via-yellow-600 to-red-500 inline-block text-transparent bg-clip-text font-extrabold">
+              DigiDINE
+            </span>
           </div>
         </Link>
       </div>
@@ -117,23 +123,23 @@ const Navbar = () => {
       </div>
       <div className="navbar-end">
         {user ? (
-          <div className="dropdown flex">
+          <div className="dropdown flex justify-center items-center">
             <img
               src={user.photoURL}
               tabIndex="0"
-              className="w-16 rounded-full mr-2"
+              className="w-14 md:w-16  h-14 md:h-16 rounded-full mr-2 "
               role="button"
             />
 
             <ul
               tabIndex="0"
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-18 w-52 p-2 shadow right-10"
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-68 w-52 p-2 shadow right-10"
             >
               {profileLink}
             </ul>
 
             <button
-              className="btn bg-gradient-to-r from-red-300 to-sky-400  rounded-lg w-22 font-bold text-xs md:text-lg lg:text-xl  md:w-28 h-16"
+              className="btn bg-gradient-to-r from-red-300 to-sky-400  rounded-lg w-22 font-bold text-xs md:text-lg lg:text-xl  md:w-28 md:h-13 h-10 lg:h-16"
               onClick={handleSignOut}
             >
               Log Out

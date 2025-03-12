@@ -26,42 +26,62 @@ const Register = () => {
     const password = e.target.password.value;
     const displayName = e.target.name.value;
     const image = e.target.image.files[0];
+    // console.log(image);
 
     try {
+      let photoURL;
       // Upload image
-      const photoURL = await imageUpload(image);
-
+      if (image != undefined) {
+        photoURL = await imageUpload(image);
+      } else {
+        photoURL = null;
+      }
+      // console.log(photoURL);
       // Password validation
       if (password.length < 6) {
-        throw new Error("Password should be at least 6 characters long.");
+        setBtnClicked(false);
+        return setErrorMessage(
+          "Password should be at least 6 characters long."
+        );
       }
       if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
-        throw new Error(
+        setBtnClicked(false);
+        return setErrorMessage(
           "Password must contain at least one uppercase letter, one lowercase letter, and one digit."
         );
       }
 
       // Create user
-      const result = await createUser(email, password);
+
+      await createUser(email, password);
 
       // Update profile
       await updateUserProfile(displayName, photoURL);
-      await axios.post(`http://localhost:3000/users/${email}`, {
-        displayName,
-        photoURL,
-        email,
-      });
+      const user = { email, displayName, photoURL };
+      // console.log(user);
+      fetch(`https://restaurant-management-server-sage.vercel.app/users`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(user),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.insertedId) {
+            Swal.fire({
+              title: "Success",
+              text: "Registration Successful ",
+              icon: "success",
+              confirmButtonText: "Cool",
+            });
+          }
+        });
       navigate("/");
+    } catch (err) {
       Swal.fire({
-        title: "Registration Successful",
-        text: "You are now logged in!",
-        icon: "success",
-        confirmButtonText: "Close",
-      });
-    } catch (error) {
-      Swal.fire({
-        title: "Failed to Register",
-        text: "Already have an account",
+        title: "Registration Failed",
+        text: "Already have an account using this email",
         icon: "error",
         confirmButtonText: "Close",
       });
@@ -71,20 +91,30 @@ const Register = () => {
   // Google Sign In
 
   const handleGoogleSignUp = async () => {
-    const result = await signInWithGoogle();
-    const { displayName, photoURL, email } = result.user;
-    await axios.post(`http://localhost:3000/users/${email}`, {
-      displayName,
-      photoURL,
-      email,
-    });
-    Swal.fire({
-      title: "Success",
-      text: "Successfully Logged In",
-      icon: "success",
-      confirmButtonText: "Cool",
-    });
-    navigate("/");
+    await signInWithGoogle()
+      .then((result) => {
+        let user = result.user;
+        const { displayName, photoURL, email } = user;
+        // console.log(user);
+        axios.post(
+          `https://restaurant-management-server-sage.vercel.app/users`,
+          {
+            displayName,
+            photoURL,
+            email,
+          }
+        );
+        navigate("/");
+        Swal.fire({
+          title: "Success",
+          text: "Successfully Logged In",
+          icon: "success",
+          confirmButtonText: "Cool",
+        });
+      })
+      .catch((error) => {
+        // console.error("Error during Google sign-in:", error);
+      });
   };
 
   return (

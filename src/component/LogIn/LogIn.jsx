@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -12,10 +12,8 @@ import { Helmet } from "react-helmet-async";
 const LogIn = () => {
   const { signInUser, signInWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState("");
   const handleLogIn = async (e) => {
     e.preventDefault();
-
     const email = e.target.email.value;
     const password = e.target.password.value;
 
@@ -42,20 +40,30 @@ const LogIn = () => {
   };
 
   const handleGoogleLogIn = async () => {
-    const result = await signInWithGoogle();
-    const { displayName, photoURL, email } = result.user;
-    await axios.post(`http://localhost:3000/users/${email}`, {
-      displayName,
-      photoURL,
-      email,
-    });
-    navigate("/");
-    Swal.fire({
-      title: "Success",
-      text: "Successfully Logged In",
-      icon: "success",
-      confirmButtonText: "Cool",
-    });
+    await signInWithGoogle()
+      .then((result) => {
+        let user = result.user;
+        const { displayName, photoURL, email } = user;
+        // console.log(user);
+        axios.post(
+          `https://restaurant-management-server-sage.vercel.app/users`,
+          {
+            displayName,
+            photoURL,
+            email,
+          }
+        );
+        navigate("/");
+        Swal.fire({
+          title: "Success",
+          text: "Successfully Logged In",
+          icon: "success",
+          confirmButtonText: "Cool",
+        });
+      })
+      .catch((error) => {
+        // console.error("Error during Google sign-in:", error);
+      });
   };
 
   return (
@@ -129,7 +137,6 @@ const LogIn = () => {
                 </span>
               </button>
             </div>
-            {errorMessage && <p>{errorMessage}</p>}
 
             {/* Signup Link */}
             <p className="text-center text-gray-700">

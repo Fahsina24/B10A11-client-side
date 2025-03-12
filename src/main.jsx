@@ -17,6 +17,7 @@ import MyOrders from "./component/MyOrders/MyOrders";
 import PrivateRoute from "./routes/PrivateRoute";
 import SingleFood from "./component/SingleFood/SingleFood";
 import FoodPurchase from "./component/FoodPurchase/FoodPurchase";
+import UpdateFoodInfo from "./component/UpdateFoodInfo/UpdateFoodInfo";
 
 const router = createBrowserRouter([
   {
@@ -39,13 +40,18 @@ const router = createBrowserRouter([
       {
         path: "/allFoods",
         element: <AllFood></AllFood>,
-        loader: () => fetch(`http://localhost:3000/allFoods`),
+        loader: () =>
+          fetch(
+            `https://restaurant-management-server-sage.vercel.app/allFoods`
+          ),
       },
       {
         path: "/singleFood/:id",
         element: <SingleFood></SingleFood>,
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/singleFood/${params.id}`),
+          fetch(
+            `https://restaurant-management-server-sage.vercel.app/singleFood/${params.id}`
+          ),
       },
       {
         path: "/gallery",
@@ -59,15 +65,34 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/singleFood/${params.id}`),
+          fetch(
+            `https://restaurant-management-server-sage.vercel.app/singleFood/${params.id}`
+          ),
       },
       {
-        path: "/my_food",
+        path: "/my_food/users/:email",
         element: (
           <PrivateRoute>
             <MyFoods></MyFoods>
           </PrivateRoute>
         ),
+
+        loader: ({ params }) =>
+          fetch(
+            `https://restaurant-management-server-sage.vercel.app/my_food/users/${params.email}`
+          ),
+      },
+      {
+        path: "/update/:id",
+        element: (
+          <PrivateRoute>
+            <UpdateFoodInfo />
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(
+            `https://restaurant-management-server-sage.vercel.app/update/${params.id}`
+          ),
       },
       {
         path: "/add_food",
