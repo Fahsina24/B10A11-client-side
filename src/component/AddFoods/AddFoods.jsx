@@ -1,53 +1,44 @@
 import Swal from "sweetalert2";
 import { AuthContext } from "../../provider/AuthProvider";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { imageUpload } from "../../api/ImgApi";
+
 import { Helmet } from "react-helmet-async";
 
 const AddFoods = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [imagePreview, setImagePreview] = useState(null);
-
-  const handleImage = async (e) => {
-    const imgVal = e.target.files[0];
-    if (imgVal) {
-      const ImgView = URL.createObjectURL(imgVal);
-      setImagePreview(ImgView);
-      return () => URL.revokeObjectURL(ImgView);
-    }
-  };
 
   const handleAddFood = async (e) => {
     e.preventDefault();
     const form = e.target;
     const foodName = form.foodName.value;
-    const foodImage = form.image.files[0];
+    const foodImage = form.image.value;
     const foodCategory = form.foodCategory.value;
     const quantity = parseInt(form.quantity.value);
     const price = parseFloat(form.price.value);
     const foodOrigin = form.foodOrigin.value;
     const description = form.description.value;
-    const userEmail = user.email;
-    const userName = user.displayName;
-    const Image = await imageUpload(foodImage);
+    const userEmail = user?.email;
+    const userName = user?.displayName;
+    // console.log(foodImage);
+
     const newFood = {
       foodName,
-      Image,
+      foodImage,
       foodCategory,
       quantity,
       price,
       foodOrigin,
       description,
-      userEmail,
-      userName,
+      addBy: { userEmail, userName },
     };
+    // console.log(newFood);
 
     try {
       await axios.post(
-        "https://vercel.com/fahsinas-projects/restaurant-management-server/addFoods",
+        "https://restaurant-management-server-sage.vercel.app/addFoods",
         newFood
       );
       Swal.fire({
@@ -99,23 +90,12 @@ const AddFoods = () => {
             <div className="form-control flex flex-col md:col-span-2">
               <label className="label font-semibold text-gray-700">Photo</label>
               <input
-                type="file"
+                type="text"
                 className="file-input file-input-primary text-sm text-gray-500"
                 name="image"
-                accept="image/*"
-                onChange={handleImage}
               />
             </div>
 
-            {imagePreview && (
-              <div className="w-full flex justify-center mt-4">
-                <img
-                  src={imagePreview}
-                  className="w-40 h-40 object-cover rounded-lg shadow-md"
-                  alt="Preview"
-                />
-              </div>
-            )}
             <div className="form-control flex flex-col md:col-span-2">
               <label className="label font-semibold text-gray-700">
                 Description

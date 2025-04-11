@@ -1,6 +1,6 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link, useLoaderData } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../provider/AuthProvider";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -9,31 +9,47 @@ import { useNavigate } from "react-router-dom";
 const FoodPurchase = () => {
   const { user } = useContext(AuthContext);
   const details = useLoaderData();
-  const { foodName, quantity, price } = details;
+  const [disableBtn, setDisableBtn] = useState(false);
+  const { _id, foodName, quantity, price, addBy, foodImage } = details;
   const navigate = useNavigate();
   const handlePurchase = async (e) => {
     e.preventDefault();
-    const form = e.target;
-    const foodName = e.target.foodName.value;
-    const price = e.target.price.value;
-    const quantity = e.target.quantity.value;
-    const buyerEmail = user.email;
-    const buyerName = user.displayName;
-    let currentTime = new Date().toLocaleTimeString();
+    const productId = _id;
+    const sellerEmail = addBy?.userEmail;
+    const sellerName = addBy?.userName;
+    const buyerEmail = user?.email;
+    const buyerName = user?.displayName;
+    const buyingTime = new Date().toLocaleTimeString();
+    const buyingDate = new Date().toLocaleDateString();
+    if (quantity === 0) {
+      Swal.fire({
+        icon: "info",
+        title: "Sorry",
+        text: `Opps. You cannot able to buy ${foodName} as it is not available`,
+        confirmButtonText: "Close",
+        showClass: {
+          popup: "animate__animated animate__fadeInUp animate__faster",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutDown animate__faster",
+        },
+      });
+      return setDisableBtn(true);
+    }
 
-    console.log(currentTime);
     const foodInfo = {
       foodName,
+      productId,
       price,
       quantity,
-      buyerEmail,
-      buyerName,
-      currentTime,
+      foodImage,
+      sellerDetails: { sellerEmail, sellerName },
+      buyerDetails: { buyerEmail, buyerName, buyingTime, buyingDate },
     };
     // console.log(Image);
     try {
       await axios.post(
-        "https://restaurant-management-server-sage.vercel.app/purchaseFoods",
+        `https://restaurant-management-server-sage.vercel.app/purchaseFoods`,
         foodInfo
       );
       Swal.fire({
@@ -48,6 +64,7 @@ const FoodPurchase = () => {
           popup: "animate__animated animate__fadeOutDown animate__faster",
         },
       });
+      navigate(`/orderPage/${buyerEmail}`);
     } catch (error) {
       console.log(error);
     }
@@ -144,16 +161,25 @@ const FoodPurchase = () => {
 
             {/* Purchase Button */}
             <div className="form-control">
-              <button
-                type="submit"
-                className="btn w-full py-4 text-xl font-bold rounded-xl bg-blue-600 text-white transition-all duration-300 ease-in-out hover:bg-blue-700 hover:scale-105 shadow-lg"
-              >
-                Purchase
-              </button>
+              {disableBtn ? (
+                <button
+                  disabled
+                  className=" btn w-full bg-gray-400 text-xl cursor-not-allowed text-white rounded-lg px-4 py-2 "
+                >
+                  Purchase
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className="btn w-full py-4 text-xl font-bold rounded-xl bg-blue-600 text-white transition-all duration-300 ease-in-out hover:bg-blue-700 hover:scale-105 shadow-lg"
+                >
+                  Purchase
+                </button>
+              )}
             </div>
           </form>
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => navigate(-2)}
             className="btn w-full py-4 text-xl font-bold rounded-xl bg-blue-600 text-white transition-all duration-300 ease-in-out mt-6 hover:bg-blue-700 hover:scale-105 shadow-lg"
           >
             Go Back

@@ -25,18 +25,9 @@ const Register = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
     const displayName = e.target.name.value;
-    const image = e.target.image.files[0];
-    // console.log(image);
+    const photoURL = e.target.image.value;
 
     try {
-      let photoURL;
-      // Upload image
-      if (image != undefined) {
-        photoURL = await imageUpload(image);
-      } else {
-        photoURL = null;
-      }
-      // console.log(photoURL);
       // Password validation
       if (password.length < 6) {
         setBtnClicked(false);
@@ -89,7 +80,6 @@ const Register = () => {
     setBtnClicked(false);
   };
   // Google Sign In
-
   const handleGoogleSignUp = async () => {
     await signInWithGoogle()
       .then((result) => {
@@ -168,14 +158,14 @@ const Register = () => {
 
             <div className="form-control flex flex-col">
               <label className="label mb-2">
-                <span className="label-text text-2xl font-bold">Image:</span>
+                <span className="label-text text-2xl font-bold">PhotoURL:</span>
               </label>
 
               <input
-                type="file"
-                className="file-input file-input-success mt-2 text-sm text-gray-500"
+                className="input input-bordered text-2xl h-[60px] w-full"
                 name="image"
-                accept="image/*"
+                type="text"
+                placeholder="Enter photoURL"
               />
             </div>
             <div className="form-control flex flex-col ">

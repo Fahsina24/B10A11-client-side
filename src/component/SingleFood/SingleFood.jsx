@@ -1,19 +1,22 @@
+import { useContext, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useLoaderData } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../provider/AuthProvider";
 const SingleFood = () => {
   const details = useLoaderData();
+  const { user } = useContext(AuthContext);
+  const [purchaseCount, setPurchaseCount] = useState(0);
   const {
     _id,
     foodName,
-    Image,
+    foodImage,
     foodCategory,
     quantity,
     price,
     foodOrigin,
+    addBy,
     description,
-    userEmail,
-    userName,
   } = details;
 
   return (
@@ -29,7 +32,7 @@ const SingleFood = () => {
           <div className="flex flex-col lg:flex-row gap-6">
             <div className="w-full lg:w-1/2">
               <img
-                src={Image}
+                src={foodImage}
                 alt={foodName}
                 className="w-full h-72 object-contain rounded-lg"
               />
@@ -44,8 +47,16 @@ const SingleFood = () => {
 
               <div className="flex flex-wrap gap-4 mt-4 text-gray-700">
                 <div className="flex-1">
-                  <p className="font-bold">Quantity:</p>
-                  <p>{quantity}</p>
+                  <div className="flex">
+                    <p className="font-black">Quantity: </p>
+                    <p
+                      className={`${
+                        quantity != 0 ? "text-green-600" : "text-red-600"
+                      } font-bold`}
+                    >
+                      {quantity}
+                    </p>
+                  </div>
                 </div>
                 <div className="flex-1">
                   <p className="font-bold">Origin:</p>
@@ -60,7 +71,7 @@ const SingleFood = () => {
               </div>
               <div>
                 <p className="font-bold">Purchased By User:</p>
-                <p>0</p>
+                <p>{purchaseCount}</p>
               </div>
             </div>
           </div>
@@ -75,16 +86,26 @@ const SingleFood = () => {
                 <p className="text-lg font-bold text-gray-800">
                   Seller Details:
                 </p>
-                <p className="text-gray-700">{userName}</p>
-                <p className="text-gray-500">{userEmail}</p>
+                <p className="text-gray-700">{addBy.userName}</p>
+                <p className="text-gray-500">{addBy.userEmail}</p>
               </div>
+
               <div className="mt-4 lg:mt-0">
-                <Link
-                  to={`/purchase_page/${_id}`}
-                  className="btn bg-gradient-to-r from-blue-500 to-blue-700 btn-base text-white rounded-lg px-4 py-2 hover:bg-blue-700"
-                >
-                  Purchase Now
-                </Link>
+                {user?.email === addBy.userEmail ? (
+                  <button
+                    className="btn bg-gray-400 cursor-not-allowed text-white rounded-lg px-4 py-2"
+                    disabled
+                  >
+                    Purchase Now
+                  </button>
+                ) : (
+                  <Link
+                    to={`/purchaseFoods/${_id}`}
+                    className="btn bg-gradient-to-r from-blue-500 to-blue-700 btn-base text-white rounded-lg px-4 py-2 hover:bg-blue-700"
+                  >
+                    Purchase Now
+                  </Link>
+                )}
               </div>
             </div>
           </div>

@@ -45,7 +45,7 @@ const Navbar = () => {
     <>
       <li className="flex  justify-center items-center">
         <NavLink
-          to={`/my_food/users/${user?.email}`}
+          to={`/my_foods/${user?.email}`}
           className="block text-base md:text-lg p-4 lg:p-2 w-full lg:h-12 h-16 text-center"
         >
           My Foods
@@ -57,13 +57,13 @@ const Navbar = () => {
           to="/add_food"
           className="block text-base md:text-lg p-4 lg:p-2 w-full lg:h-12 h-16 text-center"
         >
-          Add Foods
+          Add Food
         </NavLink>
       </li>
       <br />
       <li className="flex  justify-center items-center">
         <NavLink
-          to="/my_orders"
+          to={`/orderPage/${user?.email}`}
           className="block text-base md:text-lg p-4 lg:p-2 w-full lg:h-12 h-16 text-center"
         >
           My Orders

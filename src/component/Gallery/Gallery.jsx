@@ -45,9 +45,9 @@ const Gallery = () => {
       description: "A generous portion of perfectly seasoned large fries.",
     },
     {
-      title: "Pizza",
+      title: "Egg Fried Rice",
       image: img4,
-      description: "A cheesy, oven-baked pizza topped with fresh ingredients.",
+      description: "Rice is fried using eggs and with some fresh ingredients.",
     },
     {
       title: "Chocolate Vanilla IceCream",

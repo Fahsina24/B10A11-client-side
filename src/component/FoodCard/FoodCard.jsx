@@ -4,14 +4,12 @@ const FoodCard = ({ food }) => {
   const {
     _id,
     foodName,
-    Image,
+    foodImage,
     foodCategory,
     quantity,
     price,
     foodOrigin,
     description,
-    userEmail,
-    userName,
   } = food;
 
   return (
@@ -20,7 +18,7 @@ const FoodCard = ({ food }) => {
         {/* Image Section */}
         <figure className="overflow-hidden rounded-t-xl">
           <img
-            src={Image}
+            src={foodImage}
             alt={foodName}
             className="w-full h-64 object-contain hover:scale-110"
           />
@@ -66,12 +64,12 @@ const FoodCard = ({ food }) => {
           <div className="flex justify-between items-center text-gray-600 gap-6">
             <div>
               <p className="text-sm font-semibold">Seller:</p>
-              <p>{userName}</p>
+              <p>{food.addBy.userName}</p>
             </div>
             <div>
               <p className="text-sm font-semibold">Contact:</p>
               <p className="text-sm text-blue-500 text-wrap flex-wrap">
-                {userEmail}
+                {food.addBy.userEmail}
               </p>
             </div>
           </div>

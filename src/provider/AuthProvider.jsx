@@ -7,6 +7,7 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase/firebase.config";
 
@@ -47,6 +48,16 @@ const AuthProvider = ({ children }) => {
     const userActive = onAuthStateChanged(auth, (currentUser) => {
       // console.log("Current User", currentUser)
       setUser(currentUser);
+      if (currentUser?.email) {
+        const userEmail = { email: currentUser.email };
+        axios
+          .post("http://localhost:3000/jwt", userEmail, {
+            withCredentials: true,
+          })
+          .then((res) => {
+            res.data;
+          });
+      }
       setLoading(false);
     });
     return () => {

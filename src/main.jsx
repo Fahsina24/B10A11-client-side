@@ -18,6 +18,7 @@ import PrivateRoute from "./routes/PrivateRoute";
 import SingleFood from "./component/SingleFood/SingleFood";
 import FoodPurchase from "./component/FoodPurchase/FoodPurchase";
 import UpdateFoodInfo from "./component/UpdateFoodInfo/UpdateFoodInfo";
+import axios from "axios";
 
 const router = createBrowserRouter([
   {
@@ -58,7 +59,7 @@ const router = createBrowserRouter([
         element: <Gallery></Gallery>,
       },
       {
-        path: "/purchase_page/:id",
+        path: "/purchaseFoods/:id",
         element: (
           <PrivateRoute>
             <FoodPurchase></FoodPurchase>
@@ -70,7 +71,7 @@ const router = createBrowserRouter([
           ),
       },
       {
-        path: "/my_food/users/:email",
+        path: "/my_foods/:email",
         element: (
           <PrivateRoute>
             <MyFoods></MyFoods>
@@ -78,9 +79,7 @@ const router = createBrowserRouter([
         ),
 
         loader: ({ params }) =>
-          fetch(
-            `https://restaurant-management-server-sage.vercel.app/my_food/users/${params.email}`
-          ),
+          fetch(`http://localhost:3000/my_foods/${params.email}`),
       },
       {
         path: "/update/:id",
@@ -103,12 +102,18 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/my_orders",
+        path: "/orderPage/:email",
         element: (
           <PrivateRoute>
             <MyOrders></MyOrders>
           </PrivateRoute>
         ),
+        loader: ({ params }) =>
+          axios
+            .get(`http://localhost:3000/orderPage/${params.email}`, {
+              withCredentials: true,
+            })
+            .then((res) => res.data),
       },
     ],
   },

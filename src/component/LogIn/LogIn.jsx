@@ -14,9 +14,9 @@ const LogIn = () => {
   const navigate = useNavigate();
   const handleLogIn = async (e) => {
     e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
     await signInUser(email, password)
       .then((result) => {
         console.log(result);
@@ -29,7 +29,7 @@ const LogIn = () => {
         navigate("/");
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         Swal.fire({
           title: "Failed to Log In",
           text: "Please use correct credentials",
@@ -37,6 +37,7 @@ const LogIn = () => {
           confirmButtonText: "Close",
         });
       });
+    form.reset();
   };
 
   const handleGoogleLogIn = async () => {
@@ -65,7 +66,6 @@ const LogIn = () => {
         // console.error("Error during Google sign-in:", error);
       });
   };
-
   return (
     <div>
       <Helmet>
