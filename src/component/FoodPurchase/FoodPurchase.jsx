@@ -11,16 +11,19 @@ const FoodPurchase = () => {
   const details = useLoaderData();
   const [disableBtn, setDisableBtn] = useState(false);
   const { _id, foodName, quantity, price, addBy, foodImage } = details;
+
   const navigate = useNavigate();
   const handlePurchase = async (e) => {
     e.preventDefault();
     const productId = _id;
+    const buyingQuantity = e.target.quantity.value;
     const sellerEmail = addBy?.userEmail;
     const sellerName = addBy?.userName;
     const buyerEmail = user?.email;
     const buyerName = user?.displayName;
     const buyingTime = new Date().toLocaleTimeString();
     const buyingDate = new Date().toLocaleDateString();
+
     if (quantity === 0) {
       Swal.fire({
         icon: "info",
@@ -41,7 +44,7 @@ const FoodPurchase = () => {
       foodName,
       productId,
       price,
-      quantity,
+      buyingQuantity,
       foodImage,
       sellerDetails: { sellerEmail, sellerName },
       buyerDetails: { buyerEmail, buyerName, buyingTime, buyingDate },
@@ -123,8 +126,9 @@ const FoodPurchase = () => {
               </label>
               <input
                 name="quantity"
-                value={quantity}
-                readOnly
+                type="number"
+                min="1"
+                max={quantity}
                 className="input input-bordered w-full text-lg p-4 rounded-xl shadow-md bg-gray-100 cursor-not-allowed"
               />
             </div>

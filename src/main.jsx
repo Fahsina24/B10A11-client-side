@@ -79,7 +79,11 @@ const router = createBrowserRouter([
         ),
 
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/my_foods/${params.email}`),
+          axios
+            .get(`http://localhost:3000/my_foods/${params.email}`, {
+              withCredentials: true,
+            })
+            .then((res) => res.data),
       },
       {
         path: "/update/:id",
@@ -90,7 +94,7 @@ const router = createBrowserRouter([
         ),
         loader: ({ params }) =>
           fetch(
-            `https://restaurant-management-server-sage.vercel.app/update/${params.id}`
+            `https://restaurant-management-server-sage.vercel.app/singleFood/${params.id}`
           ),
       },
       {

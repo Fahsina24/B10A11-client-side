@@ -4,7 +4,6 @@ import { useContext } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
 import { useState } from "react";
-import { imageUpload } from "../../api/ImgApi";
 import { DiAptana } from "react-icons/di";
 import Lottie from "lottie-react";
 import registerAnimation from "../../assets/RegisterLottie.json";

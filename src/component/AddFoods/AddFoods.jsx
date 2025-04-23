@@ -88,10 +88,12 @@ const AddFoods = () => {
             ))}
 
             <div className="form-control flex flex-col md:col-span-2">
-              <label className="label font-semibold text-gray-700">Photo</label>
+              <label className="label font-semibold text-gray-700">
+                PhotoURL
+              </label>
               <input
                 type="text"
-                className="file-input file-input-primary text-sm text-gray-500"
+                className="input input-bordered rounded-lg shadow-sm text-gray-500"
                 name="image"
               />
             </div>
