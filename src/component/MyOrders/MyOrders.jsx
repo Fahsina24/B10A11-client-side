@@ -1,10 +1,40 @@
 import { Helmet } from "react-helmet-async";
 import { useLoaderData } from "react-router-dom";
 import { MdDeleteForever } from "react-icons/md";
+import Swal from "sweetalert2";
+import { useState } from "react";
 
 const MyOrders = () => {
   const dataList = useLoaderData();
   // console.log(dataList);
+  const [listedData, setListedData] = useState(dataList);
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:3000/delete/${id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            const newListedData = listedData.filter((data) => id != data._id);
+            setListedData(newListedData);
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+          });
+      }
+    });
+  };
 
   return (
     <div>
@@ -15,7 +45,7 @@ const MyOrders = () => {
         <h2 className="text-center text-4xl font-bold text-gray-800 mb-8">
           My Orders
         </h2>
-        {dataList.length == 0 && (
+        {listedData.length == 0 && (
           <div className=" w-11/12 mx-auto border-2 min-h-40 border-gray-300">
             <div className=" flex justify-center items-center min-h-40">
               <p className="text-center text-4xl">No Foods Added yet</p>
@@ -23,7 +53,7 @@ const MyOrders = () => {
           </div>
         )}
 
-        {dataList.length != 0 && (
+        {listedData.length != 0 && (
           <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-6 mx-auto w-11/12 sm:w-10/12 lg:w-8/12">
             <div className="overflow-x-auto">
               <table className="table">
@@ -41,7 +71,7 @@ const MyOrders = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {dataList.map((food, index) => (
+                  {listedData.map((food, index) => (
                     <tr key={index}>
                       <td className="border border-gray-300">
                         {" "}
@@ -89,7 +119,10 @@ const MyOrders = () => {
                         {food.buyerDetails.buyingTime}
                       </td>
                       <td className="border border-gray-300 px-4 py-2">
-                        <button className="btn bg-gradient-to-r from-blue-500 to-blue-700 btn-sm text-white rounded-md  hover:bg-blue-700 m-4">
+                        <button
+                          onClick={() => handleDelete(food._id)}
+                          className="btn bg-gradient-to-r from-blue-500 to-blue-700 btn-sm text-white rounded-md  hover:bg-blue-700 m-4"
+                        >
                           <MdDeleteForever size={22} />
                         </button>
                       </td>

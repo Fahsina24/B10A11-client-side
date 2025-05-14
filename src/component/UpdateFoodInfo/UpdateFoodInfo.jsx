@@ -40,7 +40,10 @@ const UpdateFoodInfo = () => {
     // console.log(updateFood);
 
     try {
-      await axios.patch(`http://localhost:3000/update/${id}`, updateFood);
+      await axios.patch(
+        `https://restaurant-management-server-sage.vercel.app/update/${id}`,
+        updateFood
+      );
       Swal.fire({
         title: "Success",
         text: "Food info updated successfully!",
@@ -56,11 +59,11 @@ const UpdateFoodInfo = () => {
   return (
     <div>
       <Helmet>
-        <title>DigiDINE | Add_Foods</title>
+        <title>DigiDINE | Update_Foods_Details</title>
       </Helmet>
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 py-10">
         <p className="text-4xl font-extrabold text-gray-800 mb-6">
-          Add Food Item
+          Update Information
         </p>
         <div className="w-full max-w-4xl bg-white shadow-lg rounded-xl p-8">
           <form

@@ -46,17 +46,31 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const userActive = onAuthStateChanged(auth, (currentUser) => {
-      // console.log("Current User", currentUser)
+      console.log("Current User", currentUser);
       setUser(currentUser);
       if (currentUser?.email) {
         const userEmail = { email: currentUser.email };
         axios
-          .post("http://localhost:3000/jwt", userEmail, {
-            withCredentials: true,
-          })
+          .post(
+            "https://restaurant-management-server-sage.vercel.app/jwt",
+            userEmail,
+            {
+              withCredentials: true,
+            }
+          )
           .then((res) => {
-            res.data;
+            console.log("login token", res.data);
           });
+      } else {
+        axios
+          .post(
+            "https://restaurant-management-server-sage.vercel.app/logout",
+            {},
+            {
+              withCredentials: true,
+            }
+          )
+          .then((res) => console.log("logout", res.data));
       }
       setLoading(false);
     });

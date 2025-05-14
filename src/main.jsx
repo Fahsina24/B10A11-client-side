@@ -80,9 +80,12 @@ const router = createBrowserRouter([
 
         loader: ({ params }) =>
           axios
-            .get(`http://localhost:3000/my_foods/${params.email}`, {
-              withCredentials: true,
-            })
+            .get(
+              `https://restaurant-management-server-sage.vercel.app/my_foods/${params.email}`,
+              {
+                withCredentials: true,
+              }
+            )
             .then((res) => res.data),
       },
       {
@@ -114,9 +117,12 @@ const router = createBrowserRouter([
         ),
         loader: ({ params }) =>
           axios
-            .get(`http://localhost:3000/orderPage/${params.email}`, {
-              withCredentials: true,
-            })
+            .get(
+              `https://restaurant-management-server-sage.vercel.app/orderPage/${params.email}`,
+              {
+                withCredentials: true,
+              }
+            )
             .then((res) => res.data),
       },
     ],

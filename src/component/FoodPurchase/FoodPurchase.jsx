@@ -129,6 +129,7 @@ const FoodPurchase = () => {
                 type="number"
                 min="1"
                 max={quantity}
+                required
                 className="input input-bordered w-full text-lg p-4 rounded-xl shadow-md bg-gray-100 cursor-not-allowed"
               />
             </div>
