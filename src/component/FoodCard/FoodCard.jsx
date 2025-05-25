@@ -11,7 +11,6 @@ const FoodCard = ({ food }) => {
     foodOrigin,
     description,
   } = food;
-
   return (
     <div className="mb-6">
       <div className="bg-white border border-gray-200 rounded-xl shadow-lg h-full w-11/12 mx-auto  hover:scale-102 hover:shadow-xl flex flex-col">

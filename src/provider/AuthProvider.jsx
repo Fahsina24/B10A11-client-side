@@ -46,7 +46,7 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const userActive = onAuthStateChanged(auth, (currentUser) => {
-      console.log("Current User", currentUser);
+      // console.log("Current User", currentUser);
       setUser(currentUser);
       if (currentUser?.email) {
         const userEmail = { email: currentUser.email };
@@ -59,7 +59,7 @@ const AuthProvider = ({ children }) => {
             }
           )
           .then((res) => {
-            console.log("login token", res.data);
+            res.data;
           });
       } else {
         axios
@@ -70,7 +70,7 @@ const AuthProvider = ({ children }) => {
               withCredentials: true,
             }
           )
-          .then((res) => console.log("logout", res.data));
+          .then((res) => res.data);
       }
       setLoading(false);
     });

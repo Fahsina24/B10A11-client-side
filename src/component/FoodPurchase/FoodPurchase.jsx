@@ -16,7 +16,7 @@ const FoodPurchase = () => {
   const handlePurchase = async (e) => {
     e.preventDefault();
     const productId = _id;
-    const buyingQuantity = e.target.quantity.value;
+    const buyingQuantity = e.target.buyingQuantity.value;
     const sellerEmail = addBy?.userEmail;
     const sellerName = addBy?.userName;
     const buyerEmail = user?.email;
@@ -39,26 +39,11 @@ const FoodPurchase = () => {
       });
       return setDisableBtn(true);
     }
-
-    const foodInfo = {
-      foodName,
-      productId,
-      price,
-      buyingQuantity,
-      foodImage,
-      sellerDetails: { sellerEmail, sellerName },
-      buyerDetails: { buyerEmail, buyerName, buyingTime, buyingDate },
-    };
-    // console.log(Image);
-    try {
-      await axios.post(
-        `https://restaurant-management-server-sage.vercel.app/purchaseFoods`,
-        foodInfo
-      );
+    if (buyingQuantity == 0) {
       Swal.fire({
-        icon: "success",
-        title: "Purchased Successful",
-        text: `${foodName} is purchased`,
+        icon: "info",
+        title: "Sorry",
+        text: `You must need to order one item if you want to purchase it`,
         confirmButtonText: "Close",
         showClass: {
           popup: "animate__animated animate__fadeInUp animate__faster",
@@ -67,9 +52,53 @@ const FoodPurchase = () => {
           popup: "animate__animated animate__fadeOutDown animate__faster",
         },
       });
-      navigate(`/orderPage/${buyerEmail}`);
-    } catch (error) {
-      console.log(error);
+    }
+    if (buyingQuantity > quantity) {
+      Swal.fire({
+        icon: "info",
+        title: "Sorry",
+        text: `You cannot order the items more than our available quantity`,
+        confirmButtonText: "Close",
+        showClass: {
+          popup: "animate__animated animate__fadeInUp animate__faster",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutDown animate__faster",
+        },
+      });
+    }
+    if (buyingQuantity > 0 && buyingQuantity <= quantity) {
+      const foodInfo = {
+        foodName,
+        productId,
+        price,
+        buyingQuantity,
+        foodImage,
+        sellerDetails: { sellerEmail, sellerName },
+        buyerDetails: { buyerEmail, buyerName, buyingTime, buyingDate },
+      };
+      // console.log(Image);
+      try {
+        await axios.post(
+          `https://restaurant-management-server-sage.vercel.app/purchaseFoods`,
+          foodInfo
+        );
+        Swal.fire({
+          icon: "success",
+          title: "Purchased Successful",
+          text: `${foodName} is purchased`,
+          confirmButtonText: "Close",
+          showClass: {
+            popup: "animate__animated animate__fadeInUp animate__faster",
+          },
+          hideClass: {
+            popup: "animate__animated animate__fadeOutDown animate__faster",
+          },
+        });
+        navigate(`/orderPage/${buyerEmail}`);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
   return (
@@ -125,10 +154,8 @@ const FoodPurchase = () => {
                 </span>
               </label>
               <input
-                name="quantity"
+                name="buyingQuantity"
                 type="number"
-                min="1"
-                max={quantity}
                 required
                 className="input input-bordered w-full text-lg p-4 rounded-xl shadow-md bg-gray-100 cursor-not-allowed"
               />

@@ -127,7 +127,6 @@ const AddFoods = () => {
                 />
               </div>
             ))}
-
             <button
               type="submit"
               className="btn bg-gradient-to-r from-red-400 to-sky-400 text-black w-full text-lg font-bold py-3 rounded-lg"

@@ -41,10 +41,6 @@ const router = createBrowserRouter([
       {
         path: "/allFoods",
         element: <AllFood></AllFood>,
-        loader: () =>
-          fetch(
-            `https://restaurant-management-server-sage.vercel.app/allFoods`
-          ),
       },
       {
         path: "/singleFood/:id",
