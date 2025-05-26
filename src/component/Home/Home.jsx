@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import Banner from "../Banner";
+import Banner from "./Banner";
 
 const Home = () => {
   return (

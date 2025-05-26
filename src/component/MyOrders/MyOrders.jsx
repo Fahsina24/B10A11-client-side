@@ -19,9 +19,12 @@ const MyOrders = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/delete/${id}`, {
-          method: "DELETE",
-        })
+        fetch(
+          `https://restaurant-management-server-sage.vercel.app/delete/${id}`,
+          {
+            method: "DELETE",
+          }
+        )
           .then((res) => res.json())
           .then((data) => {
             const newListedData = listedData.filter((data) => id != data._id);

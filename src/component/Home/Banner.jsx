@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "../assets/banner.jpg";
+import logo from "../../assets/banner.jpg";
 import { motion } from "motion/react";
 const Banner = () => {
   return (

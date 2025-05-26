@@ -12,12 +12,12 @@ const AllFood = () => {
   // console.log(searchVal.length);
   useEffect(() => {
     if (searchVal.length === 0) {
-      axios.get(url).then((res) => {
+      axios.get(url, { withCredentials: true }).then((res) => {
         setAllfoods(res.data);
       });
     } else if (searchVal.length !== 0) {
       url = `https://restaurant-management-server-sage.vercel.app/allFoods?searchVal=${searchVal}`;
-      axios.get(url).then((res) => {
+      axios.get(url, { withCredentials: true }).then((res) => {
         setAllfoods(res.data);
       });
     }

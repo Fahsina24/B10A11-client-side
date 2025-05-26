@@ -10,13 +10,14 @@ const FoodPurchase = () => {
   const { user } = useContext(AuthContext);
   const details = useLoaderData();
   const [disableBtn, setDisableBtn] = useState(false);
-  const { _id, foodName, quantity, price, addBy, foodImage } = details;
-
+  const { _id, foodName, quantity, price, addBy, foodImage, purchaseCount } =
+    details;
+  // console.log(purchaseCount);
   const navigate = useNavigate();
   const handlePurchase = async (e) => {
     e.preventDefault();
     const productId = _id;
-    const buyingQuantity = e.target.buyingQuantity.value;
+    const buyingQuantity = parseInt(e.target.buyingQuantity.value);
     const sellerEmail = addBy?.userEmail;
     const sellerName = addBy?.userName;
     const buyerEmail = user?.email;
@@ -66,8 +67,7 @@ const FoodPurchase = () => {
           popup: "animate__animated animate__fadeOutDown animate__faster",
         },
       });
-    }
-    if (buyingQuantity > 0 && buyingQuantity <= quantity) {
+    } else {
       const foodInfo = {
         foodName,
         productId,
@@ -77,11 +77,14 @@ const FoodPurchase = () => {
         sellerDetails: { sellerEmail, sellerName },
         buyerDetails: { buyerEmail, buyerName, buyingTime, buyingDate },
       };
-      // console.log(Image);
+
       try {
         await axios.post(
           `https://restaurant-management-server-sage.vercel.app/purchaseFoods`,
-          foodInfo
+          foodInfo,
+          {
+            withCredentials: true,
+          }
         );
         Swal.fire({
           icon: "success",
@@ -96,6 +99,14 @@ const FoodPurchase = () => {
           },
         });
         navigate(`/orderPage/${buyerEmail}`);
+        axios.patch(
+          `https://restaurant-management-server-sage.vercel.app/updateQuantity/${productId}`,
+          foodInfo,
+
+          {
+            withCredentials: true,
+          }
+        );
       } catch (error) {
         console.log(error);
       }

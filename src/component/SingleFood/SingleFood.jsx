@@ -1,12 +1,12 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { useLoaderData } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../provider/AuthProvider";
 const SingleFood = () => {
   const details = useLoaderData();
+  // console.log(details);
   const { user } = useContext(AuthContext);
-  const [purchaseCount, setPurchaseCount] = useState(0);
   const {
     _id,
     foodName,
@@ -16,6 +16,7 @@ const SingleFood = () => {
     price,
     foodOrigin,
     addBy,
+    purchaseCount,
     description,
   } = details;
 

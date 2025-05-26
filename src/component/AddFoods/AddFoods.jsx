@@ -9,6 +9,7 @@ import { Helmet } from "react-helmet-async";
 const AddFoods = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const purchaseCount = 0;
 
   const handleAddFood = async (e) => {
     e.preventDefault();
@@ -32,6 +33,7 @@ const AddFoods = () => {
       price,
       foodOrigin,
       description,
+      purchaseCount,
       addBy: { userEmail, userName },
     };
     // console.log(newFood);
@@ -39,7 +41,8 @@ const AddFoods = () => {
     try {
       await axios.post(
         "https://restaurant-management-server-sage.vercel.app/addFoods",
-        newFood
+        newFood,
+        { withCredentials: true }
       );
       Swal.fire({
         title: "Success",

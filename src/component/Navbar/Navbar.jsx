@@ -5,6 +5,7 @@ import { AuthContext } from "../../provider/AuthProvider";
 import { useContext } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { IoIosArrowDown } from "react-icons/io";
 
 const Navbar = () => {
   const { user, signOutUser } = useContext(AuthContext);
@@ -122,6 +123,37 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
+        <div className="dropdown hidden md:flex">
+          <div tabIndex={0} className="btn m-4">
+            <div className="flex gap-2 text-xl">
+              Theme
+              <IoIosArrowDown size={30} />
+            </div>
+          </div>
+          <ul
+            tabIndex={0}
+            className="dropdown-content bg-base-200 rounded-box top-18 right-4 z-[1] w-50 h-26 p-2 shadow-2xl"
+          >
+            <li>
+              <input
+                type="radio"
+                name="theme-dropdown"
+                className=" btn btn-sm text-xl btn-block btn-ghost justify-start"
+                aria-label="Light"
+                value="light"
+              />
+            </li>
+            <li>
+              <input
+                type="radio"
+                name="theme-dropdown"
+                className="theme-controller text-xl btn btn-sm btn-block btn-ghost justify-start"
+                aria-label="Dark"
+                value="dark"
+              />
+            </li>
+          </ul>
+        </div>
         {user ? (
           <div className="dropdown flex justify-center items-center">
             <img

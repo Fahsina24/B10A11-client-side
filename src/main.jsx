@@ -4,7 +4,7 @@ import "./index.css";
 import { HelmetProvider } from "react-helmet-async";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./component/Root/Root";
-import ErrorPage from "./component/ErrorPage/ErrorPAge";
+import ErrorPage from "./component/ErrorPage/ErrorPage";
 import Home from "./component/Home/Home";
 import AuthProvider from "./provider/AuthProvider";
 import LogIn from "./component/LogIn/LogIn";
@@ -47,7 +47,8 @@ const router = createBrowserRouter([
         element: <SingleFood></SingleFood>,
         loader: ({ params }) =>
           fetch(
-            `https://restaurant-management-server-sage.vercel.app/singleFood/${params.id}`
+            `https://restaurant-management-server-sage.vercel.app/singleFood/${params.id}`,
+            { withCredentials: true }
           ),
       },
       {
@@ -63,7 +64,10 @@ const router = createBrowserRouter([
         ),
         loader: ({ params }) =>
           fetch(
-            `https://restaurant-management-server-sage.vercel.app/singleFood/${params.id}`
+            `https://restaurant-management-server-sage.vercel.app/singleFood/${params.id}`,
+            {
+              credentials: "include",
+            }
           ),
       },
       {
