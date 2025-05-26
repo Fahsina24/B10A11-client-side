@@ -29,6 +29,13 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
+        loader: () => {
+          return axios
+            .get(
+              `https://restaurant-management-server-sage.vercel.app/foodPurchasedCount`
+            )
+            .then((res) => res.data);
+        },
       },
       {
         path: "/logIn",

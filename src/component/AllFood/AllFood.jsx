@@ -55,7 +55,7 @@ const AllFood = () => {
             />
           </form>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8 gap-10 flex-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8 gap-10 w-full">
           {allFoods.map((food, index) => (
             <FoodCard key={index} food={food}></FoodCard>
           ))}

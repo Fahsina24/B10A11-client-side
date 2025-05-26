@@ -13,7 +13,7 @@ const FoodCard = ({ food }) => {
   } = food;
   return (
     <div className="mb-6">
-      <div className="bg-white border border-gray-200 rounded-xl shadow-lg h-full w-11/12 mx-auto  hover:scale-102 hover:shadow-xl flex flex-col">
+      <div className="bg-white border border-gray-200 rounded-xl shadow-lg h-full w-full min-w-fit mx-auto hover:scale-102 hover:shadow-xl flex flex-col">
         {/* Image Section */}
         <figure className="overflow-hidden rounded-t-xl">
           <img
@@ -67,9 +67,7 @@ const FoodCard = ({ food }) => {
             </div>
             <div>
               <p className="text-sm font-semibold">Contact:</p>
-              <p className="text-sm text-blue-500 text-wrap flex-wrap">
-                {food.addBy.userEmail}
-              </p>
+              <p className="text-sm text-blue-500">{food.addBy.userEmail}</p>
             </div>
           </div>
         </div>
