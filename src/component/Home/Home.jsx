@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import Banner from "./Banner";
 import TopSellingProducts from "./TopSellingProducts";
 import { useLoaderData } from "react-router-dom";
+import WhyUs from "./WhyUs/WhyUs";
 
 const Home = () => {
   const allTopFoods = useLoaderData();
@@ -12,6 +13,7 @@ const Home = () => {
       </Helmet>
       <Banner></Banner>
       <TopSellingProducts allTopFoods={allTopFoods}></TopSellingProducts>
+      <WhyUs></WhyUs>
     </div>
   );
 };

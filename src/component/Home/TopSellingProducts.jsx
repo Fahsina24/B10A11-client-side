@@ -1,5 +1,5 @@
 import TopFoodCarousel from "./TopSellingFoods/TopFoodCarousel/TopFoodCarousel";
-import TopSellingHeader from "./TopSellingFoods/TopSellingHeader";
+import TopSellingHeader from "./TopSellingFoods/HeadingTopSell/TopSellingHeader";
 
 const TopSellingProducts = ({ allTopFoods }) => {
   return (
