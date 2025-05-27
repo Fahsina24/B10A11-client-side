@@ -87,7 +87,7 @@ const Gallery = () => {
       </Helmet>
       <section className="flex text-center text-3xl  mt-6 mb-4 gap-4 justify-center items-center w-11/12 mx-auto">
         <section className="text-center mt-6 mb-8">
-          <h2 className="text-4xl font-extrabold animate-bounce text-green-800">
+          <h2 className="text-4xl font-extrabold text-green-800">
             A Feast for the Eyes
           </h2>
           <p className="mt-2 w-3/4 mx-auto text-gray-600 text-sm md:text-lg lg:text-xl ">

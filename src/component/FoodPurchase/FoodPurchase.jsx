@@ -14,7 +14,7 @@ const FoodPurchase = () => {
     details;
   // console.log(purchaseCount);
   const navigate = useNavigate();
-  const handlePurchase = async (e) => {
+  const handlePurchase = (e) => {
     e.preventDefault();
     const productId = _id;
     const buyingQuantity = parseInt(e.target.buyingQuantity.value);
@@ -24,8 +24,9 @@ const FoodPurchase = () => {
     const buyerName = user?.displayName;
     const buyingTime = new Date().toLocaleTimeString();
     const buyingDate = new Date().toLocaleDateString();
-
-    if (quantity === 0) {
+    if (quantity == 0) {
+      setDisableBtn(true);
+      console.log(disableBtn);
       Swal.fire({
         icon: "info",
         title: "Sorry",
@@ -38,9 +39,9 @@ const FoodPurchase = () => {
           popup: "animate__animated animate__fadeOutDown animate__faster",
         },
       });
-      return setDisableBtn(true);
-    }
-    if (buyingQuantity == 0) {
+
+      return;
+    } else if (buyingQuantity == 0) {
       Swal.fire({
         icon: "info",
         title: "Sorry",
@@ -53,8 +54,8 @@ const FoodPurchase = () => {
           popup: "animate__animated animate__fadeOutDown animate__faster",
         },
       });
-    }
-    if (buyingQuantity > quantity) {
+      return;
+    } else if (buyingQuantity > quantity) {
       Swal.fire({
         icon: "info",
         title: "Sorry",
@@ -67,7 +68,8 @@ const FoodPurchase = () => {
           popup: "animate__animated animate__fadeOutDown animate__faster",
         },
       });
-    } else {
+      return;
+    } else if (buyingQuantity > 0 && buyingQuantity <= quantity) {
       const foodInfo = {
         foodName,
         productId,
@@ -79,7 +81,7 @@ const FoodPurchase = () => {
       };
 
       try {
-        await axios.post(
+        axios.post(
           `https://restaurant-management-server-sage.vercel.app/purchaseFoods`,
           foodInfo,
           {
@@ -98,7 +100,6 @@ const FoodPurchase = () => {
             popup: "animate__animated animate__fadeOutDown animate__faster",
           },
         });
-        navigate(`/orderPage/${buyerEmail}`);
         axios.patch(
           `https://restaurant-management-server-sage.vercel.app/updateQuantity/${productId}`,
           foodInfo,
@@ -107,6 +108,7 @@ const FoodPurchase = () => {
             withCredentials: true,
           }
         );
+        navigate(`/orderPage/${buyerEmail}`);
       } catch (error) {
         console.log(error);
       }
@@ -203,7 +205,7 @@ const FoodPurchase = () => {
             </div>
 
             {/* Purchase Button */}
-            <div className="form-control">
+            <div className="form-control" onSubmit={handlePurchase}>
               {disableBtn ? (
                 <button
                   disabled
